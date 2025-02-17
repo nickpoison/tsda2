@@ -1,7 +1,7 @@
 ## Time Series for Data Science - Edition 2  ... coming in 2025 or 6
 
 
-- All the (updated) code used in the text  is in [Rcode.md](https://github.com/nickpoison/tsda2/blob/master/Rcode.md)
+- All the code used in the text  is in [Rcode.md](https://github.com/nickpoison/tsda2/blob/master/Rcode.md)
 
 
 
