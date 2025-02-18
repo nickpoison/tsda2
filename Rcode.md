@@ -115,10 +115,8 @@ Example 1.7 - 1.8
 
 ```r
 par(mfrow=2:1)
-w = rnorm(250)
-# 250 N(0,1) variates
-v = filter(w, sides=1, filter=rep(1/3,3))
-# moving average
+w = rnorm(250)                             # 250 N(0,1) variates
+v = filter(w, sides=1, filter=rep(1/3,3))  # moving average
 tsplot(w, col=4, main="white noise", gg=TRUE)
 tsplot(v, ylim=c(-3,3), col=4, main="moving average", gg=TRUE)
 ```
@@ -126,13 +124,12 @@ tsplot(v, ylim=c(-3,3), col=4, main="moving average", gg=TRUE)
 <br/>
 Example 1.9
 
-😖 Don't forget to deal with the curse of `dlyr` if it's loaded. Either detach it `detach(package:dplyr)` or reverse its curse: set `filter = stats::filter` and `lag = stats::lag`.  
- 
+> 😖 Don't forget to deal with the curse of `dplyr` if it's loaded. Either detach it `detach(package:dplyr)` or reverse its curse: set `filter = stats::filter` and `lag = stats::lag`.  You can set `Filter = dplyr::filter` and `Lag = dplyr::lag` and use these capitalized versions if you want to have `dplyr` available while analyzing time series. 
+
 
 ```r
 set.seed(90210)
-w = rnorm(250 + 50)
-# 50 extra to avoid startup problems
+w = rnorm(250 + 50)   # 50 extra to avoid startup problems
 x = filter(w, filter=c(1.5,-.75), method="recursive")[-(1:50)]
 tsplot(x, main="autoregression", col=4, gg=TRUE)
 ```
@@ -208,8 +205,7 @@ ccf2(y, x, lwd=2, col=4, gg=TRUE)
 Examples 2.27
 
 ```r
-(r = round( acf1(soi, 6, plot=FALSE), 2)) # sample acf values
-# [1] 0.60 0.37 0.21 0.05 -0.11 -0.19
+( r = round( acf1(soi, 6, plot=FALSE), 2) ) # sample acf values
 par(mfrow=c(1,2))
 tsplot(lag(soi,-1), soi, col=4, type='p', xlab='lag(soi,-1)')
  legend("topleft", legend=r[1], bg="white", adj=.45, cex = 0.8)
@@ -334,15 +330,8 @@ c(AIC(fit),  BIC(fit))/num    # model without co
 c(AIC(fit2), BIC(fit2))/num   # model with co
 ```
 
-&#129300; NOTE: You can't do arithmetic directly in a `lm()` call, you have to use "interupt"...
-
-```r
-# does NOT work
-lm(cmort~ tempr + tempr^2, data=lap)
-
-# does work
-lm(cmort~ tempr + I(tempr^2), data=lap)
-```
+> &#129300; NOTE: You can't do arithmetic directly in a `lm()` call, you have to use "interrupt"... this __does NOT work:__  `lm(cmort~ tempr + tempr^2, data=lap)`
+BUT this __does work:__  `lm(cmort~ tempr + I(tempr^2), data=lap)`.
 
 <br/>
 Example 3.7
@@ -411,7 +400,7 @@ lag2.plot(soi, rec, 8, col=4)  # Figure 3.11
 
 Example 3.15
 ```r
-set.seed(90210)      # so you can reproduce these results
+set.seed(90210)                # so you can reproduce these results
 x  = 2*cos(2*pi*1:500/50 + .6*pi) + rnorm(500,0,5)
 z1 = cos(2*pi*1:500/50); z2 = sin(2*pi*1:500/50)
 summary(fit <- lm(x~ 0 + z1 + z2))  # zero to exclude the intercept
@@ -605,7 +594,7 @@ mean(abs(r) >= .5)  # .5 exceedance prob
 Example 4.28
 
 ```r
-tsplot(diff(log(varve)), col=4, ylab=expression(nabla~log~X[~t]), main="Transformed Glacial Varves")
+tsplot(diff(log(varve)), col=4, ylab=bquote(nabla~log~X[~t]), main="Transformed Glacial Varves")
 
 acf2(diff(log(varve)), col=4 )
 
@@ -614,7 +603,7 @@ x = diff(log(varve))       # data
 r = acf1(x, 1, plot=FALSE) # acf(1)
 c(0) -> z -> Sc -> Sz -> Szw -> para # initialize ...
 c(x[1]) -> w                         # ... all variables
-num = length(x)            # 633
+num = length(x)    
 
 ## Gauss-Newton Estimation
 para[1] = (1-sqrt(1-4*(r^2)))/(2*r)  # MME to start (not very good)
@@ -663,18 +652,25 @@ sarima(rnorm(1000), 3, 0, 3)
 ```
 
 <br/>
-Example 4.31
+Example 4.31<br/>
 
 ```R
-set.seed(666)
-x = rnorm(1000)  # white normal noise
+set.seed(666)    # from the depths of hell
+x = rnorm(1000)  # comes white normal noise
+```
 
+and now <br/>
+![dumb and dumber](dd.png)
+
+```R
 library(forecast)
 auto.arima(x)    # stepwise
 
 auto.arima(x, stepwise=FALSE)  # all subsets
+```
 
-# get smart
+but let's get smart &#129300;
+```r
 ar(x)   # uses AIC by default
 ```
 
