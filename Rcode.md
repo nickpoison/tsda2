@@ -930,7 +930,7 @@ sarima(pp$L, 2,0,0, xreg=cbind(L1=pp$L1, LH1=pp$L1*pp$H1), col=4)
 
 
 
-
+<br/>
 Aliasing
 
 ```r
