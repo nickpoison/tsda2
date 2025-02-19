@@ -330,7 +330,7 @@ c(AIC(fit),  BIC(fit))/num    # model without co
 c(AIC(fit2), BIC(fit2))/num   # model with co
 ```
 
-> &#129300; NOTE: You can't do arithmetic directly in a `lm()` call, you have to use "interrupt"... this __does NOT work:__  `lm(cmort~ tempr + tempr^2, data=lap)`
+> &#129300; NOTE: You can't do arithmetic directly in an `lm()` call, you have to use "interrupt"... this __does NOT work:__  `lm(cmort~ tempr + tempr^2, data=lap)`
 BUT this __does work:__  `lm(cmort~ tempr + I(tempr^2), data=lap)`.
 
 <br/>
