@@ -582,7 +582,7 @@ Example 4.26
 
 ```r
 set.seed(1)
-ma1 = sarima.sim(ma = 0.9, n = 50)
+ma1 = sarima.sim(ma = 0.9, n = 100)
 acf1(ma1, plot=FALSE)[1]
 
 # generate 10000 MA(1)s and calculate first sample ACF
@@ -659,8 +659,11 @@ set.seed(666)    # from the depths of hell
 x = rnorm(1000)  # comes white normal noise
 ```
 
-and now <br/>
-![dumb and dumber](dd.png)
+<br/>
+
+and now &hellip; <br/>
+![dumb and dumber](dd.png) <br/>
+&hellip; these guys do ARIMA
 
 ```R
 library(forecast)
@@ -668,6 +671,9 @@ auto.arima(x)    # stepwise
 
 auto.arima(x, stepwise=FALSE)  # all subsets
 ```
+&#129315;&#129315;&#129315;&#129315;&#129315;
+
+
 
 but let's get smart &#129300;
 ```r
@@ -759,7 +765,7 @@ plot(x.ima, main="EWMA")
 ```
 
 <br/>
-Example 5.6
+Examples 5.6 &ndash; 5.7
 
 ```r
 ##-- Figure 5.3 --##
@@ -781,15 +787,6 @@ sarima(diff(log(gnp)), 1,0,0) # AR(1) on growth rate
 round( ARMAtoMA(ar=.35, ma=0, 10), 3) # print psi-weights
 ```
 
-<br/>
-Example 5.7
-
-```r
-# Model (i): MA(2) on GNP growth rate
-AIC = -6.45013  AICc = -6.44964  BIC = -6.38882
-# Model (ii): AR(1) on GNP growth rate
-AIC = -6.44694  AICc = -6.44669  BIC = -6.40096
-```
 
 <br/>
 Example 5.8
