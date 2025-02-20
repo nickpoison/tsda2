@@ -1,6 +1,6 @@
 
 
-## R Code Used in the Examples - tsda 
+## R Code Used in the Examples - tsda2 
 
 <img align="left" src="https://github.com/nickpoison/astsa/blob/master/fun_with_astsa/figs/tsda.jpg" alt="tsda"  height="220"/>  
 
@@ -38,6 +38,7 @@ R code in <a href="http://www.stat.pitt.edu/stoffer/tsda/">Time Series: A Data A
   * [Chapter 6 - Spectral Analysis and Filtering](#chapter-6)
   * [Chapter 7 - Spectral Estimation](#chapter-7)
   * [Chapter 8 - Additional Topics](#chapter-8)
+  * [Elsewhere](#elsewhere)
 
 ---
 
@@ -1354,6 +1355,100 @@ prde = ifelse(lag(x,-1) < flutar$thr, prde1, prde2)
 polygon(xx, yy, border=gray(.6,.5), col=gray(.6,.2))
 legend('bottomright', legend=c('observed', 'predicted'), lty=0:1, pch=c(20,NA), col=c(6,4), lwd=2)
 ```
+
+<br/>
+
+[<sub>top</sub>](#table-of-contents)
+
+---
+
+## Elsewhere
+
+This is a collection of code used in the text not listed above.
+
+
+<br/>
+
+__Lotka-Volterra Equations__ &ndash; Figure 3.5 shows a simulation of the equations.  This is how the figure was generated.
+
+```r
+H = c(1); L =c(.5)
+for (t in 1:66000){
+H[t+1] = 1.0015*H[t] - .00060*L[t]*H[t] 
+L[t+1] =  .9994*L[t] + .00025*L[t]*H[t]
+}
+L = ts(10*L, start=1850, freq=900)
+H = ts(10*H, start=1850, freq=900)
+
+tsplot(cbind(predator=L, prey=H), spag=TRUE, col=c(2,4), ylim=c(0,125), ylab="Population Size", gg=TRUE, addLegend=TRUE, location='topleft', horiz=TRUE)
+```
+
+<br/>
+
+Example 4.40 shows the __causal region of an AR(2)__:
+
+```r
+seg1   =  seq( 0, 2,  by=0.1)
+seg2   =  seq(-2, 2,  by=0.1)
+name1  =  bquote(phi[1])
+name2  =  bquote(phi[2])
+tsplot(seg1, (1-seg1), ylim=c(-1,1), xlim=c(-2,2), ylab=name2, xlab=name1, col=4, gg=TRUE, main='Causal Region of an AR(2)')
+lines(-seg1, (1-seg1), ylim=c(-1,1), xlim=c(-2,2), col=4) 
+lines(seg2, -(seg2^2 /4), ylim=c(-1,1), col=4)
+lines(x=c(-2,2), y=c(-1,-1), ylim=c(-1,1), col=4)
+clip(-1,1,-1,1)
+abline(h=0, v=0, lty=2, col=8)
+text(0, .35, 'real roots')
+text(0, -.5, 'complex roots')
+```
+
+<br/>
+
+In Appendix A, Example A.7 shows a normal likelihood.  The code for that example is for a contour plot, but the figure (Fig A.4) is a perspective plot.  This is how the perspective plot was generated (the code is pretty involved, which is why it's not displayed in the text).
+
+```r
+# da data
+set.seed(90210)
+N = 200
+xdata = rnorm(N, mean=100, sd=15)
+
+# for the likelihood
+normL = function(x, mu, sigma) {
+   -sum(dnorm(x, mu, sigma, log=TRUE))
+ }
+
+# grid of parameter values
+mu    = seq(80, 120, length.out=N)
+sigma = seq(10, 20, length.out=N)
+parm.grid = expand.grid(mu=mu, sigma=sigma)
+# evaluate -log L over the grid
+like = c()
+for (i in 1:N^2) {
+like[i] = normL(xdata, parm.grid[i,"mu"], parm.grid[i,"sigma"])
+}
+like = matrix(like, nrow=N, ncol=N)
+
+
+# code to make a perspective plot with levels - from:
+# https://stat.ethz.ch/pipermail/r-help/2003-July/036151.html
+ levelpersp <- function(x, y, z, colors=rainbow, ...) {
+  zz <- (z[-1,-1] + z[-1,-ncol(z)] + z[-nrow(z),-1] + z[-nrow(z),-ncol(z)])/4
+  breaks <- hist(zz, breaks=20, plot=FALSE)$breaks
+  cols <-  colors(length(breaks)-1, start=.1, end=1, v=.8)
+  zzz <- cut(zz, breaks=breaks, labels=cols)
+  persp(x, y, z, col=(as.character(zzz)), ...)
+  }
+
+# finally, the figure
+par(mar=c(2,0,0,0), cex.axis=.9)
+levelpersp(mu, sigma, like*.001, phi=35, theta=25, expand=.75, scale=TRUE,  border=NA, ticktype="detailed", xlab='\u03BC',  ylab="\u03C3", zlab= "-log L" 
+)
+
+
+```
+
+
+
 
 <br/>
 <br/>
