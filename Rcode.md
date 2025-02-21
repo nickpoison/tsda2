@@ -112,7 +112,7 @@ mtext("seconds", side=1, line=1.75)
 ```
 
 <br/>
-Example 1.7 - 1.8
+Examples 1.7 - 1.8
 
 ```r
 par(mfrow=2:1)
@@ -203,7 +203,7 @@ ccf2(y, x, lwd=2, col=4, gg=TRUE)
 ```
 
 <br/>
-Examples 2.27
+Example 2.27
 
 ```r
 ( r = round( acf1(soi, 6, plot=FALSE), 2) ) # sample acf values
@@ -349,7 +349,7 @@ mtext("Lynx Residuals", outer=TRUE, line=-1.4, font=2)
 ```
 
 <br/>
-Examples 3.8 &mdash; 3.11
+Examples 3.8 &ndash; 3.11
 
 ```r
 # for Figures 3.7 and 3.8   
@@ -398,8 +398,8 @@ lag2.plot(soi, rec, 8, col=4)  # Figure 3.11
 ```
 
 <br/>
-
 Example 3.15
+
 ```r
 set.seed(90210)                # so you can reproduce these results
 x  = 2*cos(2*pi*1:500/50 + .6*pi) + rnorm(500,0,5)
@@ -659,8 +659,6 @@ Example 4.31<br/>
 set.seed(666)    # from the depths of hell
 x = rnorm(1000)  # comes white normal noise
 ```
-
-<br/>
 
 and now &hellip; <br/>
 ![dumb and dumber](dd.png) <br/>
@@ -976,7 +974,7 @@ abline(v=1/32, col=4, lty=5) # stimulus frequency
 ```
 
 <br/>
-Example 6.7, 6.9, 6.10
+Examples 6.7, and 6.9 &ndash; 6.10
 
 ```r
 par(mfrow=c(3,1))
@@ -1072,7 +1070,7 @@ rec_ave = mvspec(rec, spans=9, col=4, lwd=2)
  abline(v=.25, lty=2, col=4)
  mtext('1/4', side=1, line=0, at=.25, cex=.75)
 ```
-For CIs, add `log="yes"` to the `mvspec` calls above and change the lower end of the rectangle (`rect`) from `-1e-5` to `1e-5`.
+For CIs, add `log="y"` to the `mvspec` calls above and change the lower end of the rectangle (`rect`) from `-1e-5` to `1e-5`.
 
 <br/>
 Example 7.6
@@ -1092,13 +1090,13 @@ Example 7.7
 
 # easy graphic
 par(mfrow=1:2)
-plot(dm, ylab=expression(h[~k])) # for a plot
-plot(kernel("modified.daniell", c(3,3,3)), ylab=expression(h[~k])) 
+plot(dm, ylab=bquote(h[~k])) # for a plot
+plot(kernel("modified.daniell", c(3,3,3)), ylab=bquote(h[~k])) 
 
 # beautiful gris-gris plot
 par(mfrow=1:2)
-tsplot(kernel("modified.daniell", c(3,3)), ylab=expression(h[~k]), cex.main=1, lwd=2, col=4, ylim=c(0,.16), xlab='k', type='h', main='mDaniell(3,3)', gg=TRUE, las=0)
-tsplot(kernel("modified.daniell", c(3,3,3)), ylab=expression(h[~k]), cex.main=1, lwd=2, col=4, ylim=c(0,.16), xlab='k', type='h', main='mDaniell(3,3,3)', gg=TRUE, las=0)
+tsplot(kernel("modified.daniell", c(3,3)), ylab=bquote(h[~k]), cex.main=1, lwd=2, col=4, ylim=c(0,.16), xlab='k', type='h', main='mDaniell(3,3)', gg=TRUE, las=0)
+tsplot(kernel("modified.daniell", c(3,3,3)), ylab=bquote(h[~k]), cex.main=1, lwd=2, col=4, ylim=c(0,.16), xlab='k', type='h', main='mDaniell(3,3,3)', gg=TRUE, las=0)
 
 # smoothed specta
 par(mfrow=c(2,1))
@@ -1112,7 +1110,7 @@ recs = mvspec(rec, spans=c(7,7), taper=.1, col=5, lwd=2)
  abline(v=.25, lty=2, col=4)
  mtext("1/4", side=1, line=0, at=.25, cex=.75)
 ```
-For logs, add `log="yes"` in `mvspec()` and change lower rectangle to from `-1e5` to `1e5`
+For logs, add `log="y"` in `mvspec()` and change lower rectangle to from `-1e5` to `1e-5`
 
 ```r 
 # details 
@@ -1233,8 +1231,9 @@ adf.test(log(varve))      # ADF test
 pp.test(log(varve))       # PP test
 ```
 
+<br/>
+Example 8.6
 
-Example 8.6 
 ```r
 library(arfima)
 summary(varve.fd <- arfima(log(varve), order = c(0,0,0)))  
@@ -1383,7 +1382,7 @@ H = ts(10*H, start=1850, freq=900)
 tsplot(cbind(predator=L, prey=H), spag=TRUE, col=c(2,4), ylim=c(0,125), ylab="Population Size", gg=TRUE, addLegend=TRUE, location='topleft', horiz=TRUE)
 ```
 
-<br/>
+<br/>   
 
 Example 4.40 shows the __causal region of an AR(2)__:
 
@@ -1404,7 +1403,7 @@ text(0, -.5, 'complex roots')
 
 <br/>
 
-In Appendix A, Example A.7 shows a normal likelihood.  The code for that example is for a contour plot, but the figure (Fig A.4) is a perspective plot.  This is how the perspective plot was generated (the code is pretty involved, which is why it's not displayed in the text).
+In Appendix A, Example A.7 shows a normal likelihood.  The code in the text is for a contour plot, but the figure (Fig A.4) is a perspective plot.  This is how the perspective plot was generated (the code is pretty involved, which is why it's not displayed in the text).
 
 ```r
 # da data
