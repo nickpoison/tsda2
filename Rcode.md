@@ -215,6 +215,16 @@ tsplot(lag(soi,-6), soi, col=4, type='p', xlab='lag(soi,-6)')
 ```
 
 <br/>
+Large Sample ACF Distribution
+
+```R
+set.seed(101010)
+ACF = replicate(1000, acf1(rgamma(100, shape=4), plot=FALSE)) # H=20 here (by default)
+round(c(mean(ACF), sd(ACF)), 3)
+QQnorm(ACF)  
+```
+
+<br/>
 Example 2.29
 
 ```r
@@ -939,22 +949,22 @@ axis(1, at=t[T], labels=FALSE, col=gray(1), col.ticks=1)
 Example 6.1
 
 ```r
-x1 = 2*cos(2*pi*1:100*6/100) + 3*sin(2*pi*1:100*6/100)
-x2 = 4*cos(2*pi*1:100*10/100) + 5*sin(2*pi*1:100*10/100)
-x3 = 6*cos(2*pi*1:100*40/100) + 7*sin(2*pi*1:100*40/100)
-x = x1 + x2 + x3
+x = matrix(NA,100,3); w = c(6,10,40); A = c()
+for (i in 1:3){
+ a = 2*i; b = a+1; f = 2*pi*w[i]*(1:100)/100; A[i] = a^2 + b^2
+ x[,i] = a*cos(f) + b*sin(f) }
+X = rowSums(x)
 par(mfrow=c(2,2))
-tsplot(x1, ylim=c(-10,10), col=4, main=bquote(omega==6/100~~~A^2==13), gg=TRUE)
-tsplot(x2, ylim=c(-10,10), col=4, main=bquote(omega==10/100~~~A^2==41), gg=TRUE)
-tsplot(x3, ylim=c(-10,10), col=4, main=bquote(omega==40/100~~~A^2==85), gg=TRUE)
-tsplot(x,  ylim=c(-16,16), col=4, main="sum", gg=TRUE)
+for (i in 1:3){
+ tsplot(x[,i], col=4, ylim=c(-10,10), gg=TRUE, ylab=bquote(X[.(i)]), main=bquote(omega==.(w[i])/100~~~A^2==.(A[i])))  }
+tsplot(X, col=4, ylim=c(-16,16), gg=TRUE, main='sum', font.main=1)
 ```
 
 <br/>
 Periogoram &mdash; just before Example 6.4
 
 ```r 
-per  = Mod(fft(x)/sqrt(100))^2  # x from previous example
+per  = Mod(fft(X)/sqrt(100))^2  # X from previous example
 P    = (4/100)*per
 Fr   = 0:99/100
 tsplot(Fr, P, type="h", lwd=3, xlab="frequency", ylab="scaled periodogram", col=4, gg=TRUE)
@@ -1442,10 +1452,22 @@ like = matrix(like, nrow=N, ncol=N)
 par(mar=c(2,0,0,0), cex.axis=.9)
 levelpersp(mu, sigma, like*.001, phi=35, theta=25, expand=.75, scale=TRUE,  border=NA, ticktype="detailed", xlab='\u03BC',  ylab="\u03C3", zlab= "-log L" 
 )
-
-
 ```
 
+<br/>
+Appendix A: Daniell and the CLT
+
+```r
+md = function(n){kernel("modified.daniell", m=rep(3,n))}
+par(mfrow=c(2,3), cex=.8, oma=c(0,0,.5,0))
+for (i in 1:6){
+ ytop = ifelse(i<4,.2,.12)
+ tsplot(md(i), ylab=NA, lwd=2, col=4, ylim=c(0,ytop), xlab=NA, type='h', gg=TRUE)
+ if (i==1) { mtext(bquote(X[1]), side=3, line=-2, adj=.95) 
+  } else { mtext(bquote(sum(X[j], j==1, .(i))), side=3, line=-3, adj=.9) }
+}
+ title('The CLT in Action', outer=TRUE, adj=.52, line=-.9)
+ ```
 
 
 
