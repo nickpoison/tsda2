@@ -301,7 +301,7 @@ tsplot(part, main="Particulates", col=2, type="o", pch=19, ylab=NA)
 tsplot(cbind(cmort,tempr,part), col=astsa.col(2:4,.8), spaghetti=TRUE, addLegend=TRUE, legend=c("Mortality", "Temperature", "Pollution"), llwd=2)
 
 ##-- Figure 3.4 --##
-pairs(cbind(Mortality=cmort, Temperature=tempr, Particulates=part), col=astsa.col(4,.8), lower.panel=astsa:::.panelcor)
+tspairs(cbind(Mortality=cmort, Temperature=tempr, Particulates=part), hist=FALSE)
 
 ##-- center for a better tomorrow --##
 par(mfrow = 2:1)
@@ -949,15 +949,15 @@ axis(1, at=t[T], labels=FALSE, col=gray(1), col.ticks=1)
 Example 6.1
 
 ```r
-x = matrix(NA,100,3); w = c(6,10,40); A = c()
-for (i in 1:3){
- a = 2*i; b = a+1; f = 2*pi*w[i]*(1:100)/100; A[i] = a^2 + b^2
- x[,i] = a*cos(f) + b*sin(f) }
-X = rowSums(x)
-par(mfrow=c(2,2))
-for (i in 1:3){
- tsplot(x[,i], col=4, ylim=c(-10,10), gg=TRUE, ylab=bquote(X[.(i)]), main=bquote(omega==.(w[i])/100~~~A^2==.(A[i])))  }
-tsplot(X, col=4, ylim=c(-16,16), gg=TRUE, main='sum', font.main=1)
+x1 = 2*cos(2*pi*1:100*6/100)  + 3*sin(2*pi*1:100*6/100)
+x2 = 4*cos(2*pi*1:100*10/100) + 5*sin(2*pi*1:100*10/100)
+x3 = 6*cos(2*pi*1:100*40/100) + 7*sin(2*pi*1:100*40/100)
+x  = x1 + x2 + x3;  L=c(-10,10)
+par(mfrow = c(2,2), cex.main=1, font.main=1)
+tsplot(x1, ylim=L, col=4, main=bquote(omega==6/100~~A^2==13),  gg=TRUE)
+tsplot(x2, ylim=L, col=4, main=bquote(omega==10/100~~A^2==41), gg=TRUE)
+tsplot(x3, ylim=L, col=4, main=bquote(omega==40/100~~A^2==85), gg=TRUE)
+tsplot(x, main="sum", col=4, gg=TRUE)
 ```
 
 <br/>
