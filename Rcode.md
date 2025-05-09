@@ -297,7 +297,7 @@ trend(chicken, lwd=2, ci=FALSE)               # graphic only
 
 <br/>
 
-$R^2$  has nothing to do with the linear relationship.
+$R^2$ is NOT a good measure of linear relationship.
 
 ```r
 set.seed(1984)
