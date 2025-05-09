@@ -50,7 +50,7 @@ Example 1.1
 ```r
 par(mfrow=2:1)
 tsplot(jj, ylab="USD", type="o", col=4, main="Johnson & Johnson QEPS")
-tsplot(log(jj), ylab="log(USD)", type="o", col=4)
+tsplot(jj, log='y', ylab="USD", type="o", col=4)
 ```
 
 <br/>
@@ -244,6 +244,14 @@ tsplot(y1, type="s", col=4, yaxt="n", xaxt="n", gg=TRUE)
 Example 2.32
 
 ```r
+x = cos(2*pi*.1*1:100) + rnorm(100)
+y = lag(x,-5) + rnorm(100)
+ccf2(y, x, lwd=2, col=4, gg=TRUE)
+```
+
+<br/>Example 2.33
+
+```r
 par(mfrow=c(3,1), cex=.8)
 acf1(soi, 48, col=4, lwd=2, main="Southern Oscillation Index")
 acf1(rec, 48, col=4, lwd=2, main="Recruitment")
@@ -251,7 +259,7 @@ ccf2(soi, rec, 48, col=4, lwd=2, main="SOI vs Recruitment")
 ```
 
 <br/>
-Example 2.33 
+Example 2.34 
 
 ```r
 set.seed(90210)
@@ -264,8 +272,6 @@ tsplot(cbind(X,Y), ylab="data", col=c(4,2), lwd=2, spag=TRUE, gg=TRUE)
 ccf2(X, Y, ylim=c(-.3,.3), col=4, lwd=2, gg=TRUE)
 ccf2(X, detrend(Y), ylim=c(-.3,.3), col=4, lwd=2, gg=TRUE)
 ```
-
-
 
 
 
@@ -287,69 +293,94 @@ trend(salmon, lwd=2, results=TRUE, ci=FALSE)  # graphic and results
 trend(chicken, lwd=2, ci=FALSE)               # graphic only
 ```
 
+
+
 <br/>
-Example 3.5
+
+$R^2$  has nothing to do with the linear relationship.
 
 ```r
-##-- Figure 3.2 --##
-par(mfrow=c(3,1), cex=.8)
-tsplot(cmort, main="Cardiovascular Mortality", col=6, type="o", pch=19, ylab=NA)
-tsplot(tempr, main="Temperature", col=4, type="o", pch=19, ylab=NA)
-tsplot(part, main="Particulates", col=2, type="o", pch=19, ylab=NA)
-
-##-- Figure 3.3 --##
-tsplot(cbind(cmort,tempr,part), col=astsa.col(2:4,.8), spaghetti=TRUE, addLegend=TRUE, legend=c("Mortality", "Temperature", "Pollution"), llwd=2)
-
-##-- Figure 3.4 --##
-tspairs(cbind(Mortality=cmort, Temperature=tempr, Particulates=part), hist=FALSE)
-
-##-- center for a better tomorrow --##
-par(mfrow = 2:1)
-plot(tempr, tempr^2)       # collinear
-cor(tempr, tempr^2)
-#  [1] 0.9972099
-temp = tempr - mean(tempr) # center
-plot(temp, temp^2)         # not collinear
-cor(temp, temp^2)
-#  [1] 0.07617904
-
-##-- the final model --##
-temp  = tempr - mean(tempr) # center temperature
-temp2 = temp^2
-trnd  = time(cmort)         # time is trend term
-summary(fit <- lm(cmort~ trnd + temp + temp2 + part, na.action=NULL))
-
-summary(aov(cmort~ cbind(trnd, temp, temp2, part))) # Table 3.1
-
-num = length(cmort)  # sample size
-AIC(fit)/num - log(2*pi)  # AIC
-BIC(fit)/num - log(2*pi)  # BIC
+set.seed(1984)
+t = 1:10; w = rnorm(10)
+x = t + w
+summary( lm(x~ t) )$r.sq   # [1] 0.9073
+x = t + 3*w
+summary( lm(x~ t) )$r.sq   # [1] 0.5633
 ```
+
+
+
+<br/>
+
+Example 3.2
+
+```r
+gecon5  = diff(log(econ5));  names = colnames(econ5)
+tsplot(cbind(econ5, gecon5), byrow=FALSE, ylab=names, ncol=2, col=2:6, lwd=2)
+mtext('Actual',side=3, outer=TRUE, line=-1, adj=.25)
+mtext('Growth Rate', side=3, outer=TRUE, line=-1, adj=.8)
+
+ttable( lm(unemp~ time(unemp) + . , data=econ5), vif=TRUE) 
+
+ttable( lm(unemp~ . , data=econ5), vif=TRUE)  # not shown
+
+ttable( lm(unemp~ . , data=gecon5), vif=TRUE)  
+
+gnpp = resid( lm(gnp~ consum + govinv + prinv, data=gecon5) )
+ttable(lm(unemp~ gnpp + consum + govinv + prinv, data=gecon5), vif=TRUE)
+
+res = resid( lm(unemp~ gnpp + consum + govinv + prinv, data=decon5, na.action=NULL) )
+tsplot(res)  
+acf1(res)
+```
+
+
+
+
 
 <br/>
 Example 3.6
 
 ```r
-# from previous example
-temp  = tempr - mean(tempr) # center temperature
-temp2 = temp^2
-trnd  = time(cmort)         # time is trend term
+##-- Figure 3.3 --##
+par(mfrow=c(3,1), cex=.8)
+tsplot(cmort, main="Cardiovascular Mortality", col=6, type="o", pch=19, ylab=NA)
+tsplot(tempr, main="Temperature", col=4, type="o", pch=19, ylab=NA)
+tsplot(part, main="Particulates", col=2, type="o", pch=19, ylab=NA)
 
-summary(fit2 <- lm(cmort~ trnd + temp + temp2 + part + co, data=lap))
-# compare models
-c(AIC(fit),  BIC(fit))/num    # model without co
-c(AIC(fit2), BIC(fit2))/num   # model with co
+##-- Figure 3.4 --##
+tsplot(cbind(cmort,tempr,part), col=astsa.col(2:4,.8), spaghetti=TRUE, addLegend=TRUE, legend=c("Mortality", "Temperature", "Pollution"), llwd=2)
+
+##-- Figure 3.5 --##
+tspairs(cbind(Mortality=cmort, Temperature=tempr, Particulates=part), hist=FALSE, col.diag=6)
+
+##-- the final model --##
+Z = cbind(trnd=time(cmort), tempr, tempr^2, part)
+ttable( lm(cmort~ Z, na.action=NULL), vif=TRUE )
+
+summary( aov(cmort~ Z) ) # Table 3.1
 ```
-
-> &#129300; NOTE: You can't do arithmetic directly in an `lm()` call, you have to use "interrupt"... this __does NOT work:__  `lm(cmort~ tempr + tempr^2, data=lap)`
-BUT this __does work:__  `lm(cmort~ tempr + I(tempr^2), data=lap)`.
 
 <br/>
 Example 3.7
 
 ```r
-prdtr = ts.intersect(L=Lynx, L1=lag(Lynx,-1), H1=lag(Hare,-1), dframe=TRUE)
-summary( fit <- lm(L~ L1 + L1:H1, data=prdtr, na.action=NULL) )
+# Z from previous example
+ttable( lm(cmort~ Z + co, data=lap), vif=TRUE )  
+
+cop  = resid(lm(co~ part, data=lap))  # partial out particulates from co
+temp = tempr - mean(tempr)            # center temperature
+Z    = cbind(trnd=time(cmort), temp, temp^2, part, cop)
+ttable( lm(cmort~ Z), vif=TRUE)
+```
+
+<br/>
+Example 3.8
+
+```r
+prdpry = ts.intersect(L=Lynx, L1=lag(Lynx,-1), H1=lag(Hare,-1), dframe=TRUE)
+fit    = lm(L~ L1 + L1:H1, data=prdpry, na.action=NULL) 
+ttable(fit)
 
 # residuals
 par(mfrow=1:2)
@@ -359,10 +390,9 @@ mtext("Lynx Residuals", outer=TRUE, line=-1.4, font=2)
 ```
 
 <br/>
-Examples 3.8 &ndash; 3.11
+Example 3.12
 
 ```r
-# for Figures 3.7 and 3.8   
 par(mfrow=2:1)
 tsplot(detrend(salmon), col=4, main="detrended salmon price")
 tsplot(diff(salmon), col=4, main="differenced salmon price")
@@ -373,7 +403,7 @@ acf1(diff(salmon), 48, col=4, main="differenced salmon price")
 ```
 
 <br/>
-Example 3.12 &#128561;
+Example 3.13 &#128561;
 
 ```r
 par(mfrow=c(2,1))
@@ -386,7 +416,7 @@ mean(window(diff(gtemp_land), start=1980)) # drift after 1980
 ```
 
 <br/>
-Example 3.13
+Example 3.14
 
 ```R
 layout(matrix(1:4,2), widths=c(2.5,1))
@@ -398,23 +428,22 @@ QQnorm(varve, main=NA, nxm=0)
 QQnorm(log(varve), main=NA, nxm=0)
 ```
 
-
 <br/>
-Example 3.14
+Example 3.15
 
 ```r
-lag1.plot(soi, 12, col=4)      # Figure 3.10
-lag2.plot(soi, rec, 8, col=4)  # Figure 3.11
+lag1.plot(soi, 12, col=4)      # Figure 3.12
+lag2.plot(soi, rec, 8, col=4)  # Figure 3.13
 ```
 
 <br/>
-Example 3.15
+Example 3.16
 
 ```r
 set.seed(90210)                # so you can reproduce these results
 x  = 2*cos(2*pi*1:500/50 + .6*pi) + rnorm(500,0,5)
 z1 = cos(2*pi*1:500/50); z2 = sin(2*pi*1:500/50)
-summary(fit <- lm(x~ 0 + z1 + z2))  # zero to exclude the intercept
+ttable(fit <- lm(x~ 0 + z1 + z2))  # zero to exclude the intercept
 par(mfrow=c(2,1))
 tsplot(x, col=4, gg=TRUE)
 tsplot(x, ylab=bquote(hat(x)), col=astsa.col(4,.7), gg=TRUE)
@@ -422,7 +451,7 @@ lines(fitted(fit), col=6, lwd=2)
 ```
 
 <br/>
-Example 3.16
+Example 3.17
 
 ```r
 w = c(.5, rep(1,11), .5)/12
@@ -436,7 +465,7 @@ plot(w1, type="l", ylim = c(-.02,.1), xaxt="n", yaxt="n", ann=FALSE, col=4)
 ```
 
 <br/>
-Example 3.17
+Example 3.18
 
 ```r
 tsplot(soi, col=4)
@@ -444,21 +473,26 @@ lines(ksmooth(time(soi), soi, "normal", bandwidth=1), lwd=2, col=6)
 # insert
 par(fig = c(0,.25,0,.25), new = TRUE, col=8)
 curve(dnorm(x), -3, 3, xaxt="n", yaxt="n", ann=FALSE, col=4)
-```
 
-<br/>
-Example 3.18
-
-```r 
-trend(soi, lowess=TRUE)      # trend (with default span)
-lines(lowess(soi, f=.05), lwd=2, col=4)  # El Niño cycle
+# change time unit
+SOI = ts(soi, freq=1) # make the unit of time a month
+tsplot(SOI, col=4)    # not shown
+lines(ksmooth(time(SOI), SOI, "normal", bandwidth=12), lwd=2, col=6)
 ```
 
 <br/>
 Example 3.19
 
+```r 
+trend(soi, lowess=TRUE)      # trend (with default span)
+lines(lowess(soi, f=.05), lwd=2, col=6)  # El Niño cycle
+```
+
+<br/>
+Example 3.20
+
 ```r
-tsplot(tempr, cmort, type='p', pch=19, xlab="Temperature", ylab="Mortality", col=4)
+tsplot(tempr, cmort, type='p', xlab="Temperature", ylab="Mortality", col=4)
 lines(lowess(tempr,cmort), col=6, lwd=2)
 ```
 
@@ -532,7 +566,7 @@ Example 4.10
 ```r
 set.seed(8675309)         # Jenny, I got your number
 x = rnorm(150, mean=5)    # generate iid N(5,1)s
-sarima(x, p=1,d=0,q=1, details=FALSE)  # estimation (ignore d for now)
+sarima(x, p=1, q=1, details=FALSE)  # estimation 
 ```
 
 <br/>
@@ -651,7 +685,7 @@ points(para[1:12], Sc[1:12], pch=16, col=4)
 Example 4.29
 
 ```r
-sarima(diff(log(varve)), p=0, d=0, q=1, no.constant=TRUE)
+sarima(diff(log(varve)), q=1, no.constant=TRUE)
 ```
 
 <br/>
@@ -666,8 +700,8 @@ sarima(rnorm(1000), 3, 0, 3)
 Example 4.31<br/>
 
 ```R
-set.seed(666)    # from the depths of hell
-x = rnorm(1000)  # comes white normal noise
+set.seed(666)     
+x = rnorm(1000) 
 ```
 
 and now &hellip; <br/>
@@ -703,9 +737,9 @@ sarima(x,2,0,0, no.constant=TRUE)  # overfit AR(2)
 Example 4.34
 
 ```r
-fish = sarima(rec, p=2, d=0, q=0)           # fit the model
-sarima.for(rec, n.ahead=24, p=2, d=0, q=0)  # forecast
-abline(h=fish$fit$coef["xmean"], col=4)     # display mean
+fish = sarima(rec, p=2)             # fit the model
+sarima.for(rec, n.ahead=24, p=2)    # forecast
+abline(h=fish[[1]]$coef["xmean"])   # display mean
 ```
 
 <br/>
@@ -736,9 +770,9 @@ arg = Arg(z1)/(2*pi)   # arg in cycles/pt
 Example 5.2
 
 ```r
-sarima(diff(log(varve)), p=0, d=0, q=1, no.constant=TRUE)
+sarima(diff(log(varve)), q=1, no.constant=TRUE)
 # equivalently
-sarima(log(varve), p=0, d=1, q=1, no.constant=TRUE)
+sarima(log(varve), d=1, q=1, no.constant=TRUE)
 ```
 
 <br/>
@@ -757,7 +791,7 @@ round( ARMAtoMA(ar=c(1.9,-.9), ma=0, 60), 1 )  # ain't no AR(2)
 set.seed(12345)
 x <- sarima.sim(ar=.9, d=1, n=150)
 y <- window(x, start=1, end=100)
-sarima.for(y, n.ahead=50, p=1, d=1, q=0, gg=TRUE, plot.all=TRUE)
+sarima.for(y, n.ahead=50, p=1, d=1, gg=TRUE, plot.all=TRUE)
 text(85, 360, "PAST"); text(115, 360, "FUTURE")
 abline(v=100, lty=2, col=4)
 lines(x, col=4)
@@ -774,7 +808,7 @@ plot(x.ima, main="EWMA")
 ```
 
 <br/>
-Examples 5.6 &ndash; 5.7
+Examples 5.6
 
 ```r
 ##-- Figure 5.3 --##
@@ -790,21 +824,29 @@ abline(h = mean(diff(log(gnp))), col=6)
 acf2(diff(log(gnp)), main="")
 
 
-sarima(diff(log(gnp)), 0,0,2) # MA(2) on growth rate
-sarima(diff(log(gnp)), 1,0,0) # AR(1) on growth rate
+sarima(diff(log(gnp)), q=2) # MA(2) on growth rate
+sarima(diff(log(gnp)), p=1) # AR(1) on growth rate
 
 round( ARMAtoMA(ar=.35, ma=0, 10), 3) # print psi-weights
 ```
 
-
 <br/>
-Example 5.8
+Example 5.7
 
 ```r
-sarima(diff(log(gnp)), 0,0,3)  # try an MA(2+1)
+sarima(diff(log(gnp)), q=3)  # try an MA(2+1)
 
-sarima(diff(log(gnp)), 2,0,0)  # try an AR(1+1) 
+sarima(diff(log(gnp)), p=2)  # try an AR(1+1) 
 ```
+
+<br/>Example 5.8
+
+```r
+ma2 = sarima(diff(log(gnp)), q=2, details=FALSE)
+ar1 = sarima(diff(log(gnp)), p=1, details=FALSE)
+rbind(ma2=ma2[[5]], ar1=ar1[[5]])  # compare ICs
+```
+
 
 
 <br/>
@@ -899,8 +941,8 @@ tsplot(diff(diff(cardox,12)), ylab=bquote(nabla~nabla[12]~CO[2]), col=4)
 
 acf2(diff(diff(cardox,12)), col=4) 
 
-sarima(cardox, p=0,d=1,q=1, P=0,D=1,Q=1,S=12, col=4)
-sarima(cardox, p=1,d=1,q=1, P=0,D=1,Q=1,S=12, col=4)
+sarima(cardox, 0,1,1, 0,1,1,12, col=4)
+sarima(cardox, 1,1,1, 0,1,1,12, col=4)
 
 sarima.for(cardox, 60, 1,1,1, 0,1,1,12, col=4, ylab=bquote(CO[2]))
 abline(v=2018.9, lty=6)
@@ -917,7 +959,7 @@ pp = ts.intersect(L=Lynx, L1=lag(Lynx,-1), H1=lag(Hare,-1), dframe=TRUE)
 summary( fit <- lm(L~ L1 + L1:H1, data=pp, na.action=NULL) )
 acf2(resid(fit), col=4)   # ACF/PACF of the residuls
 # Try AR(2) errors
-sarima(pp$L, 2,0,0, xreg=cbind(L1=pp$L1, LH1=pp$L1*pp$H1), col=4)
+sarima(pp$L, p=2, xreg=cbind(L1=pp$L1, LH1=pp$L1*pp$H1), col=4)
 ```
 
 
@@ -960,11 +1002,29 @@ tsplot(x3, ylim=L, col=4, main=bquote(omega==40/100~~A^2==85), gg=TRUE)
 tsplot(x, main="sum", col=4, gg=TRUE)
 ```
 
+<br/>Example 6.2
+
+```r
+set.seed(1)
+x = rnorm(7)
+t = 1:7
+c1 = cos(2*pi*t*1/7); s1 = sin(2*pi*t*1/7)
+c2 = cos(2*pi*t*2/7); s2 = sin(2*pi*t*2/7)
+c3 = cos(2*pi*t*3/7); s3 = sin(2*pi*t*3/7)
+reg = lm(x~ cbind(c1,s1,c2,s2,c3,s3))
+rbind(x, xhat = fitted(reg))   
+```
+
 <br/>
 Periogoram &mdash; just before Example 6.4
 
 ```r 
-per  = Mod(fft(X)/sqrt(100))^2  # X from previous example
+x1 = 2*cos(2*pi*1:100*6/100)  + 3*sin(2*pi*1:100*6/100)
+x2 = 4*cos(2*pi*1:100*10/100) + 5*sin(2*pi*1:100*10/100)
+x3 = 6*cos(2*pi*1:100*40/100) + 7*sin(2*pi*1:100*40/100)
+x  = x1 + x2 + x3   # from Example 6.1
+
+per  = Mod(fft(x)/sqrt(100))^2   
 P    = (4/100)*per
 Fr   = 0:99/100
 tsplot(Fr, P, type="h", lwd=3, xlab="frequency", ylab="scaled periodogram", col=4, gg=TRUE)
@@ -1111,7 +1171,6 @@ tsplot(kernel("modified.daniell", c(3,3,3)), ylab=bquote(h[~k]), cex.main=1, lwd
 # smoothed specta
 par(mfrow=c(2,1))
 sois = mvspec(soi, spans=c(7,7), taper=.1, col=5, lwd=2)
-# Bandwidth: 0.231 | Degrees of Freedom: 15.61 | split taper: 10% 
  rect(1/7, -1e5, 1/3, 1e5, density=NA, col=gray(.5,.2))
  abline(v=.25, lty=2, col=4)
  mtext("1/4", side=1, line=0, at=.25, cex=.75)
@@ -1184,14 +1243,25 @@ abline(h = C)
 
 ## Chapter 8
 
+<br/>Figure 8.1
 
-<br/>
-Example 8.1
+```r
+library(xts)
+djiar = diff(log(djia$Close))
+layout(matrix(c(1,2,1,3), 2), heights=2:1)
+plot(djiar, col=4)
+acf1(djiar, ylim=c(-.1,.6))
+acf1(djiar^2, ylim=c(-.1,.6))
+```
+
+
+
+<br/>Example 8.1
 
 ```r
 res = resid( sarima(diff(log(gnp)), 1,0,0, details=FALSE)$fit )
 acf2(res^2, 20)
-#
+
 library(fGarch)
 gnpr = diff(log(gnp))
 summary( garchFit(~arma(1,0) + garch(1,0), data = gnpr) )
@@ -1256,7 +1326,7 @@ acf1(resid(sarima(log(varve),1,1,1, details=FALSE)$fit), main='ARIMA(1,1,1)')
 acf1(innov, main='Fractionally Differenced')  
 
 # plot pi(d)
-d = 0.3727893
+d = coef(varve.fd)[1]
 p = c(1)
 for (k in 1:30) { p[k+1] = (k-d)*p[k]/(k+1) } 
 tsplot(1:30, p[-1], ylab=bquote(pi(d)), lwd=2, xlab="Index", type="h", col=4)
@@ -1467,7 +1537,7 @@ for (i in 1:6){
   } else { mtext(bquote(sum(X[j], j==1, .(i))), side=3, line=-3, adj=.9) }
 }
  title('The CLT in Action', outer=TRUE, adj=.52, line=-.9)
- ```
+```
 
 
 
