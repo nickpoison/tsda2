@@ -329,7 +329,7 @@ ttable( lm(unemp~ . , data=gecon5), vif=TRUE)
 gnpp = resid( lm(gnp~ consum + govinv + prinv, data=gecon5) )
 ttable(lm(unemp~ gnpp + consum + govinv + prinv, data=gecon5), vif=TRUE)
 
-res = resid( lm(unemp~ gnpp + consum + govinv + prinv, data=decon5, na.action=NULL) )
+res = resid( lm(unemp~ gnpp + consum + govinv + prinv, data=gecon5, na.action=NULL) )
 tsplot(res)  
 acf1(res)
 ```
