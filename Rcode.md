@@ -296,16 +296,15 @@ trend(chicken, lwd=2, ci=FALSE)               # graphic only
 
 
 <br/>
-
 $R^2$ is NOT a good measure of linear relationship.
 
 ```r
 set.seed(1984)
-t = 1:10; w = rnorm(10)
+t = 1:10;  w = rnorm(10)
 x = t + w
-summary( lm(x~ t) )$r.sq   # [1] 0.9073
+summary( lm(x~ t) )$r.sq   # cor(x~t)^2 works too
 x = t + 3*w
-summary( lm(x~ t) )$r.sq   # [1] 0.5633
+summary( lm(x~ t) )$r.sq   # cor(x~t)^2 works too
 ```
 
 
@@ -704,21 +703,15 @@ set.seed(666)
 x = rnorm(1000) 
 ```
 
-and now &hellip; <br/>
-![dumb and dumber](dd.png) <br/>
-&hellip; these guys do ARIMA
+and now &#129315;&#129315;&hellip; <br/>
 
-```R
+```
 library(forecast)
 auto.arima(x)    # stepwise
 
 auto.arima(x, stepwise=FALSE)  # all subsets
 ```
-&#129315;&#129315;&#129315;&#129315;&#129315;
-
-
-
-but let's get smart &#129300;
+&#129315; &#129315; but let's get smart &#129300;
 ```r
 ar(x)   # uses AIC by default
 ```
@@ -1318,12 +1311,10 @@ Example 8.6
 library(arfima)
 summary(varve.fd <- arfima(log(varve), order = c(0,0,0)))  
 
-# innovations (aka residuals)
+# residual analysis
 innov = resid(varve.fd)[[1]]  # resid() produces a `list` 
-tsplot(innov)       # not shown
-par(mfrow=2:1)
-acf1(resid(sarima(log(varve),1,1,1, details=FALSE)$fit), main='ARIMA(1,1,1)')
-acf1(innov, main='Fractionally Differenced')  
+sarima(innov, col=3, no.constant=TRUE)              # arfima residuals*
+sarima(log(varve), 1,1,1, col=4, no.constant=TRUE)  # arima residuals
 
 # plot pi(d)
 d = coef(varve.fd)[1]
@@ -1331,6 +1322,7 @@ p = c(1)
 for (k in 1:30) { p[k+1] = (k-d)*p[k]/(k+1) } 
 tsplot(1:30, p[-1], ylab=bquote(pi(d)), lwd=2, xlab="Index", type="h", col=4)
 ```
+\* Note- regarding `sarima(innov)` ... what's going on is you're fitting an ARIMA(0,0,0) to `innov` and then looking at the resulting residual analysis graphic.
 
 <br/>
 Example 8.7
@@ -1520,8 +1512,7 @@ like = matrix(like, nrow=N, ncol=N)
 
 # finally, the figure
 par(mar=c(2,0,0,0), cex.axis=.9)
-levelpersp(mu, sigma, like*.001, phi=35, theta=25, expand=.75, scale=TRUE,  border=NA, ticktype="detailed", xlab='\u03BC',  ylab="\u03C3", zlab= "-log L" 
-)
+levelpersp(mu, sigma, like*.001, phi=35, theta=25, expand=.75, scale=TRUE,  border=NA, ticktype="detailed", xlab='\u03BC',  ylab="\u03C3", zlab= "-log L")
 ```
 
 <br/>
