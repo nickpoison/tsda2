@@ -1,4 +1,8 @@
-## Time Series for Data Science - Edition 2  ... coming in 2025 or 6
+## Time Series for Data Science - Edition 2  
+
+> sent to the printer July 2025 ... it could be a few months for this to be published
+
+
 
 
 - All the code used in the text  is in [Rcode.md](https://github.com/nickpoison/tsda2/blob/master/Rcode.md)
