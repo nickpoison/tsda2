@@ -1,6 +1,6 @@
 ## Time Series for Data Science - Edition 2  
 
-> sent to the printer July 2025 ... it could be a few months for this to be published
+> sent to the publisher July 2025 ... it could be a few months for this to be published
 
 
 
