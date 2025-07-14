@@ -298,6 +298,7 @@ trend(chicken, lwd=2, ci=FALSE)               # graphic only
 
 
 <br/>
+
 $R^2$ is NOT a good measure of linear relationship (after eq 3.3)
 
 ```r
