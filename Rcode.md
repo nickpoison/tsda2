@@ -20,8 +20,7 @@ R code in <a href="http://www.stat.pitt.edu/stoffer/tsda/">Time Series: A Data A
 
 >  __Note:__ When you are in a code block below, you can __copy the contents of the block__ by moving your mouse to the upper right corner and clicking on the copy icon ( __&#10697;__ ) &hellip;
 
-> &hellip; 	&#128527; and don't forget to load `astsa` before each session:
-`library(astsa)`
+> The text was written using `astsa` version 2.3 (currently on GitHub and will be on CRAN when the book is published.) &hellip; 	&#128527; and don't forget to load `astsa` before each session: `library(astsa)`
 
 
 
