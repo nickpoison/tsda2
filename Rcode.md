@@ -2,11 +2,13 @@
 
 ## R Code Used in the Examples - tsda2 
 
-<img align="left" src="https://github.com/nickpoison/astsa/blob/master/fun_with_astsa/figs/tsda.jpg" alt="tsda"  height="220"/>  
 
 
-R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2). 
 
+R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2) &mdash; coming Jan-Feb 2026 <br/><br/>
+
+
+<img align="left" src="na.webp" alt="tsda"  height="200"/>  
 
 #### &#x2728;  See the [NEWS](https://github.com/nickpoison/astsa/blob/master/NEWS.md) for further details about the state of the package and the changelog.
 
@@ -21,7 +23,7 @@ R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approac
 
 >  __Note:__ When you are in a code block below, you can __copy the contents of the block__ by moving your mouse to the upper right corner and clicking on the copy icon ( __&#10697;__ ) &hellip;
 
-> The text was written using `astsa` version 2.3 (currently on GitHub and will be on CRAN when the book is published.) &hellip; 	&#128527; and don't forget to load `astsa` before each session: `library(astsa)`
+> The text is being written using `astsa` version 2.3 (currently on GitHub and will be on CRAN when the book is published.) &hellip; 	&#128527;  
 
 
 

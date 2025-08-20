@@ -1,6 +1,6 @@
 ## Time Series for Data Science - Edition 2  
 
-[Preliminary Website](https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642)
+[Website for the Text](https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642) &mdash; Coming Jan or Feb 2026
 
 
 
@@ -11,7 +11,7 @@
 
 ## astsa
 
-- The home of [astsa - the package for the text](https://github.com/nickpoison/astsa) is here too.
+- The home of [astsa](https://github.com/nickpoison/astsa) is here too.
 
 - See [NEWS](https://github.com/nickpoison/astsa/blob/master/NEWS.md) for further details about the state of the package and the changelog.
 
