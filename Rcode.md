@@ -4,7 +4,8 @@
 
 <img align="left" src="https://github.com/nickpoison/astsa/blob/master/fun_with_astsa/figs/tsda.jpg" alt="tsda"  height="220"/>  
 
-R code in <a href="http://www.stat.pitt.edu/stoffer/tsda/">Time Series: A Data Analysis Approach Using R</a> (Edition 2). 
+
+R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2). 
 
 
 #### &#x2728;  See the [NEWS](https://github.com/nickpoison/astsa/blob/master/NEWS.md) for further details about the state of the package and the changelog.

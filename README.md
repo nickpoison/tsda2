@@ -1,6 +1,6 @@
 ## Time Series for Data Science - Edition 2  
 
-> sent to the publisher July 2025 ... it could be a few months for this to be published
+[Preliminary Website](https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642)
 
 
 
