@@ -8,7 +8,7 @@
 R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2) &mdash; coming Jan-Feb 2026 <br/><br/>
 
 
-<img align="left" src="na.webp" alt="tsda"  height="200"/>  
+<img align="left" src="na.jpg" alt="tsda"  height="200"/>  
 
 #### &#x2728;  See the [NEWS](https://github.com/nickpoison/astsa/blob/master/NEWS.md) for further details about the state of the package and the changelog.
 
