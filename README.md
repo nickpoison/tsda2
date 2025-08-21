@@ -1,6 +1,6 @@
 ## Time Series for Data Science - Edition 2  
 
-[Website for the Text](https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642) &mdash; Coming Jan or Feb 2026
+[Chapman & Hall Website for the Text](https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642) &mdash; Coming Jan or Feb 2026
 
 
 

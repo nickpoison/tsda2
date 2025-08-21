@@ -23,7 +23,7 @@ R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approac
 
 >  __Note:__ When you are in a code block below, you can __copy the contents of the block__ by moving your mouse to the upper right corner and clicking on the copy icon ( __&#10697;__ ) &hellip;
 
-> The text is being written using `astsa` version 2.3 (currently on GitHub and will be on CRAN when the book is published.) &hellip; 	&#128527;  
+
 
 
 
