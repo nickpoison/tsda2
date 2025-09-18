@@ -896,12 +896,20 @@ sarima(log(varve), 1, 1, 1, no.constant=TRUE) # ARIMA(1,1,1)
 Example 5.10
 
 ```r
+# for the polynomial regression, it's better if
+# the regressors don't get too large, so we center time
 t    = time(USpop20) - 1960
+# for the regression, 'raw' specifies not to use
+# orthogonal polynomials because we want to easily
+# get a curve for the prediction
 reg  = lm( USpop20~ poly(t, 10, raw=TRUE) )
+# the next 4 lines are to get the prediction curve
+# X is the design matrix for the curve
 b    = as.vector(coef(reg))
 t    = 1900:2044
 X    = outer(t - 1960, 0:10, FUN = "^")
 pred = X %*% b
+# now plot the prediction curve, and then add the data as points
 tsplot(t, pred, ylab="Population", xlab='Year', cex.main=1, col=4,
             main="U.S. Population by Official Census")
 points(time(USpop20), USpop20, pch=21, bg=rainbow(13), cex=1.25)
