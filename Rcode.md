@@ -7,7 +7,7 @@
 
 R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2) &mdash; coming Jan-Feb 2026 <br/><br/>
 
-<img align="left" src="cover.png" alt="cover"  height="275"/>  
+<img align="left" src="cover.png" alt="cover"  height="250"/>  
 
 #### &#x2728;  See the [NEWS](https://github.com/nickpoison/astsa/blob/master/NEWS.md) for further details about the state of the package and the changelog.
 
@@ -210,12 +210,12 @@ axis(1, at=seq(-5, 5, by=2), col=gray(1))
 Example 2.27
 
 ```r
-( r = round( acf1(soi, 6, plot=FALSE), 2) ) # sample acf 
-par(mfrow=c(1,2))
+( r = round( acf1(soi, 6, plot=FALSE), 2) )  # sample acf 
+par(mfrow=c(1,2)) 
 tsplot(lag(soi,-1), soi, col=4, type='p', xlab='lag(soi,-1)')
- legend('topleft', legend=sprintf('%0.2f', r[1]), adj=.4, cex = 0.8)
+ legend('topleft', legend=sprintf('%0.2f',r[1]), adj=.4, cex=.8, box.col=8)
 tsplot(lag(soi,-6), soi, col=4, type='p', xlab='lag(soi,-6)')
- legend("topleft", legend=r[6], bg="white", adj=.25, cex = 0.8)
+ legend('topleft', legend=r[6], adj=.25, cex=.8, box.col=8)
 ```
 
 <br/>
@@ -446,9 +446,10 @@ QQnorm(log(varve), main=NA, nxm=0)
 Example 3.15
 
 ```r
-lag1.plot(soi, 12, col=4, location='bottomrigh')  # Figure 3.12
+# lwl is the lowess line width (default is 1)
+lag1.plot(soi, 12, col=4, location='topleft', lwl=2)  # Figure 3.12
 dev.new()
-lag2.plot(soi, rec, 8, col=4)                     # Figure 3.13
+lag2.plot(soi, rec, 8, col=4, lwl=2)                  # Figure 3.13
 ```
 
 <br/>
