@@ -42,7 +42,7 @@ R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approac
 
 <br/>
 
-  > 😖 Don't forget to deal with the curse of `dplyr` if it's loaded. Either detach it `detach(package:dplyr)` or reverse its curse: set `filter = stats::filter` and `lag = stats::lag`.  You can set `dfilter = dplyr::filter` and `dlag = dplyr::lag` and use these versions if you want to have `dplyr` available while analyzing time series. -Or- instead of using the inferior `dplyr`, use  [data.table]( https://CRAN.R-project.org/package=data.table) instead and avoid all these nasty problems.
+  > 😖 Don't forget to deal with the curse of `dplyr` if it's loaded. Either detach it `detach(package:dplyr)` or reverse its curse: set `filter = stats::filter` and `lag = stats::lag`.  You can set `dfilter = dplyr::filter` and `dlag = dplyr::lag` and use these versions if you want to have `dplyr` available while analyzing time series. -Or- instead of using the inferior `dplyr`, use  [data.table]( https://CRAN.R-project.org/package=data.table) and avoid all these nasty problems.
 
 
 <br/>
