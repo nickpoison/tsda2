@@ -40,9 +40,17 @@ R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approac
   * [Chapter 8 - Additional Topics](#chapter-8)
   * [Elsewhere](#elsewhere)
 
+<br/>
+
+  > 😖 Don't forget to deal with the curse of `dplyr` if it's loaded. Either detach it `detach(package:dplyr)` or reverse its curse: set `filter = stats::filter` and `lag = stats::lag`.  You can set `dfilter = dplyr::filter` and `dlag = dplyr::lag` and use these versions if you want to have `dplyr` available while analyzing time series. -Or- instead of using the inferior `dplyr`, use  [data.table]( https://CRAN.R-project.org/package=data.table) instead and avoid all these nasty problems.
+
+
+<br/>
+
 ---
 
 ## Chapter 1
+
 
 <br/>
 Example 1.1 
@@ -123,9 +131,6 @@ mtext("seconds", side=1, line=1.75)
 
 <br/>
 Examples 1.7 - 1.8
-
-
-> 😖 Don't forget to deal with the curse of `dplyr` if it's loaded. Either detach it `detach(package:dplyr)` or reverse its curse: set `filter = stats::filter` and `lag = stats::lag`.  You can set `dfilter = dplyr::filter` and `dlag = dplyr::lag` and use these versions if you want to have `dplyr` available while analyzing time series. 
 
 ```r
 set.seed(123456789)
