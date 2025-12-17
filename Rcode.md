@@ -1559,7 +1559,7 @@ This is a collection of code used in the text not listed above.
 
 <br/>
 
-__Lotka-Volterra Equations__ &ndash; Figure 3.5 shows a simulation of the equations.  This is how the figure was generated.
+__Lotka-Volterra Equations__ &ndash; Figure 3.5 shows an example of the equations.  This is how the figure was generated.
 
 ```r
 H = c(1); L =c(.5)
