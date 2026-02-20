@@ -5,7 +5,7 @@
 
 
 
-R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2) &mdash; coming Jan-Feb 2026 <br/><br/>
+R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2)  <br/><br/>
 
 <img align="left" src="cover.png" alt="cover"  height="250"/>  
 
