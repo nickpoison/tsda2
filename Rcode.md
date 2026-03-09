@@ -407,6 +407,11 @@ acf1(  resid(fit), col=4, main=NA)
 mtext("Lynx Residuals", outer=TRUE, line=-1.4, font=2)
 ```
 
+
+
+> NOTE: The example fits the predator equation (for the lynx $L_{t}$) as given by the Lotka-Volterra equations. Statisticians learn that you _should have all main effects if there are interactions_, so some people might have a hard time with this example.   However, this is a case where you have theoretical justification because if you include all main effects, you lose the cyclic nature of the LV equations. We recommend this video for students who haven't been exposed to diffeqs: <a href="https://www.youtube.com/watch?v=DDEvlLa9z_U" target="new"> Lotka-Volterra Equations</a> &#128076;
+
+
 <br/>
 Example 3.12
 
