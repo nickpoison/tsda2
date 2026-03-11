@@ -575,6 +575,7 @@ tsplot(out[,3], main="Noise", ylab="% rooms", col=8, type="c")
 
 ## Chapter 4
 
+> &#128721; Before starting this chapter, upgrade to astsa version 2.5 or later because `sarima` in version 2.4 has an error.
 
 <br/>
 Example 4.2
@@ -808,7 +809,7 @@ arg = Arg(z1)/(2*pi)   # arg in cycles/pt
 
 ## Chapter 5
 
-
+> &#128721; Before starting this chapter, upgrade to astsa version 2.5 or later because `sarima` in version 2.4 has an error.
 
 <br/>
 Example 5.2
