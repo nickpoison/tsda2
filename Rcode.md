@@ -7,7 +7,7 @@
 
 R code in <a href="https://www.routledge.com/Time-Series-A-Data-Analysis-Approach-Using-R/Shumway-Stoffer/p/book/9781041031642">Time Series: A Data Analysis Approach Using R</a> (Edition 2)  <br/><br/>
 
-<img align="left" src="cover.png" alt="cover"  height="250"/>  
+<img align="left" src="cover.png" alt="cover"  height="250" style="padding-right: 10px;"/>  
 
 #### &#x2728;  See the [NEWS](https://github.com/nickpoison/astsa/blob/master/NEWS.md) for further details about the state of the package and the changelog.
 
